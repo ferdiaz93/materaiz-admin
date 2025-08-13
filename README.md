@@ -77,18 +77,18 @@ Our template includes a comprehensive set of form components built on top of Mat
 
 ### Basic Components
 
-- `HitTextField` - Enhanced text input
-- `HitPasswordField` - Secure password input
-- `HitNumberField` - Numeric input with validation
-- `HitSelectField` - Dropdown selection
-- `HitCheckboxField` - Checkbox input
-- `HitDatePickerField` - Date selection
+- `TemplateTextField` - Enhanced text input
+- `TemplatePasswordField` - Secure password input
+- `TemplateNumberField` - Numeric input with validation
+- `TemplateSelectField` - Dropdown selection
+- `TemplateCheckboxField` - Checkbox input
+- `TemplateDatePickerField` - Date selection
 
 ### Advanced Components
 
-- `HitMultiSelectField` - Multiple selection
-- `HitAutocompleteField` - Autocomplete with suggestions
-- `HitDateTimePickerField` - Date and time selection
+- `TemplateMultiSelectField` - Multiple selection
+- `TemplateAutocompleteField` - Autocomplete with suggestions
+- `TemplateDateTimePickerField` - Date and time selection
 
 All form components support:
 
