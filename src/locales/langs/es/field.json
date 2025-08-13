@@ -1,0 +1,17 @@
+{
+  "drop_select_file": "Suelta o selecciona archivo",
+  "drop_files": "Suelta los archivos aquí o haz clic para",
+  "browse": "buscar",
+  "thorough_machine": "a través de tu máquina",
+  "upload_photo": "Subir Foto",
+  "upload_file": "Subir Archivo",
+  "not_found": "No encontrado",
+  "no_results_found": "No se encontraron resultados para ",
+  "try_typos": "Intenta verificar errores tipográficos o usar palabras completas.",
+  "please_enter_keywords": "Por favor ingrese palabras clave",
+  "add": "Agregar",
+  "filter": "Filtrar",
+  "reset": "Borrar",
+  "search": "Buscar",
+  "no_results_for_search": "No hay resultados para tu búsqueda"
+}

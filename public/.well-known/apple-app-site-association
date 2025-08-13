@@ -1,0 +1,18 @@
+{
+    "activitycontinuation": {
+        "apps": [
+            "<TeamID>.<BundleID>"
+        ]
+    },
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "<TeamID>.<BundleID>",
+                "paths": [
+                    "*"
+                ]
+            }
+        ]
+    }
+}

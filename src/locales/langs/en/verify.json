@@ -1,0 +1,10 @@
+{
+  "title": "Verify Code",
+  "subtitle": "Please check your email!",
+  "subtitle_1": "We have emailed a 6-digit confirmation code, please enter the code in below box to verify your email.",
+  "dont_have_code": "Don’t have a code?",
+  "verify": "Verify",
+  "resend_code": "Resend code",
+  "return": "Return to sign in",
+  "code_verified": "Code verified successfully!"
+}

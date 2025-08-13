@@ -1,0 +1,17 @@
+{
+  "drop_select_file": "Drop or Select file",
+  "drop_files": "Drop files here or click",
+  "browse": "browse",
+  "thorough_machine": "thorough your machine",
+  "upload_photo": "Upload Photo",
+  "upload_file": "Upload File",
+  "not_found": "Not Found",
+  "no_results_found": "No results found for ",
+  "try_typos": "Try checking for typos or using complete words.",
+  "please_enter_keywords": "Please enter keywords",
+  "add": "Add",
+  "filter": "Filter",
+  "reset": "Reset",
+  "search": "Search",
+  "no_results_for_search": "No results for your search"
+}

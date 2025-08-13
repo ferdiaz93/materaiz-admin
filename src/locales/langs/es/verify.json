@@ -1,0 +1,10 @@
+{
+  "title": "Verificar Código",
+  "subtitle": "¡Por favor, revisa tu correo electrónico!",
+  "subtitle_1": "Hemos enviado un código de confirmación de 6 dígitos por correo electrónico, por favor ingresa el código en el cuadro de abajo para verificar tu correo electrónico.",
+  "dont_have_code": "¿No tienes un código?",
+  "verify": "Verificar",
+  "resend_code": "Reenviar código",
+  "return": "Volver a iniciar sesión",
+  "code_verified": "¡Código verificado exitosamente!"
+}
