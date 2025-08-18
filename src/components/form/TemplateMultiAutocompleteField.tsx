@@ -96,9 +96,12 @@ export const TemplateMultiAutocompleteField = <
           ): string => {
             if (option === null) return '';
             if (typeof option === 'string') return option;
-            if (typeof option === 'object' && option !== null && 'value' in option) {
-              const foundOption = options.find((x) => x.value === option.value);
-              return foundOption ? String(foundOption.label) : '';
+            if (typeof option === 'object' && option !== null) {
+              const optionAny = option as any;
+              if (typeof optionAny.value !== 'undefined') {
+                const foundOption = options.find((x) => x.value === optionAny.value);
+                return foundOption ? String(foundOption.label) : '';
+              }
             }
             const foundOption = options.find((x) => x.value === option);
             return foundOption ? String(foundOption.label) : '';
@@ -109,8 +112,11 @@ export const TemplateMultiAutocompleteField = <
           ): boolean => {
             if (value === null) return false;
             if (typeof value === 'string') return option.value === value;
-            if (typeof value === 'object' && value !== null && 'value' in value) {
-              return option.value === value.value;
+            if (typeof value === 'object' && value !== null) {
+              const valueAny = value as any;
+              if (typeof valueAny.value !== 'undefined') {
+                return option.value === valueAny.value;
+              }
             }
             return option.value === value;
           }}
