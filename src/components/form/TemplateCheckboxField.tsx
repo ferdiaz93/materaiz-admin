@@ -1,9 +1,24 @@
-import { Checkbox, FormControlLabel, InputLabel } from '@mui/material';
+import { Checkbox, CheckboxProps, FormControlLabel, InputLabel } from '@mui/material';
 import { useId } from 'react';
-import { FieldValues } from 'react-hook-form';
+import { FieldPath, FieldPathValue, FieldValues, Noop, RefCallBack } from 'react-hook-form';
+import { BaseFieldProps } from './BaseFieldProps';
 import { GridItem } from './GridItem';
-import { TemplateTextFieldProps } from './TemplateTextField';
 import { INPUT_LABEL_DEFAULT_STYLES } from './styles';
+
+export type TemplateCheckboxFieldProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> = BaseFieldProps<TFieldValues> &
+  Omit<CheckboxProps, 'checked' | 'onChange' | 'onBlur' | 'name' | 'ref'> & {
+    field: {
+      onChange: (...event: any[]) => void;
+      onBlur: Noop;
+      value: FieldPathValue<TFieldValues, TName>;
+      name: TName;
+      ref: RefCallBack;
+    };
+    floatingLabel?: boolean;
+  };
 
 /**
  * Mui Checkbox wrapper.
@@ -18,14 +33,18 @@ import { INPUT_LABEL_DEFAULT_STYLES } from './styles';
  *  />
  */
 
-export const TemplateCheckboxField = <TValue extends FieldValues>({
+export const TemplateCheckboxField = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
   label,
   colSpan,
   field,
   floatingLabel = false,
   fieldState,
+  formState,
   ...props
-}: TemplateTextFieldProps<TValue>) => {
+}: TemplateCheckboxFieldProps<TFieldValues, TName>) => {
   const id = useId();
   return (
     <GridItem colSpan={colSpan}>
@@ -35,15 +54,7 @@ export const TemplateCheckboxField = <TValue extends FieldValues>({
         </InputLabel>
       )}
       <FormControlLabel
-        control={
-          <Checkbox
-            {...field}
-            id={id}
-            checked={field.value}
-            error={!!fieldState.error}
-            {...props}
-          />
-        }
+        control={<Checkbox {...field} id={id} checked={Boolean(field.value)} {...props} />}
         label={floatingLabel ? label : undefined}
       />
     </GridItem>

@@ -17,14 +17,19 @@ export type TemplateFreeAutocompleteFieldProps<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > = BaseFieldProps<TFieldValues> &
   Omit<
-    AutocompleteProps<FieldPathValue<TFieldValues, TName>, false, false, true>,
-    'options' | 'renderInput'
+    AutocompleteProps<
+      string | { value: FieldPathValue<TFieldValues, TName>; label: ReactNode },
+      false,
+      false,
+      true
+    >,
+    'options' | 'renderInput' | 'renderOption'
   > & {
     options: { value: FieldPathValue<TFieldValues, TName>; label: ReactNode }[];
     field: {
       onChange: (...event: any[]) => void;
       onBlur: Noop;
-      value: FieldPathValue<TFieldValues, TName>;
+      value: FieldPathValue<TFieldValues, TName> | string;
       name: TName;
       ref: RefCallBack;
     };
@@ -53,7 +58,10 @@ export type TemplateFreeAutocompleteFieldProps<
  *  />
  */
 
-export const TemplateFreeAutocompleteField = <TValue extends FieldValues>({
+export const TemplateFreeAutocompleteField = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
   label,
   colSpan,
   options,
@@ -61,9 +69,11 @@ export const TemplateFreeAutocompleteField = <TValue extends FieldValues>({
   floatingLabel = false,
   field,
   fieldState,
+  formState,
   ...autocompleteProps
-}: TemplateFreeAutocompleteFieldProps<TValue>) => {
+}: TemplateFreeAutocompleteFieldProps<TFieldValues, TName>) => {
   const id = useId();
+
   return (
     <GridItem colSpan={colSpan}>
       {!floatingLabel && (
@@ -78,11 +88,51 @@ export const TemplateFreeAutocompleteField = <TValue extends FieldValues>({
           {...autocompleteProps}
           freeSolo
           options={options}
-          getOptionLabel={(option) => {
+          getOptionLabel={(
+            option: string | { value: FieldPathValue<TFieldValues, TName>; label: ReactNode } | null
+          ): string => {
+            if (option === null) return '';
             if (typeof option === 'string') return option;
-            return options.find((x) => x.value === option)?.label || '';
+            if (typeof option === 'object' && option !== null && 'value' in option) {
+              const foundOption = options.find((x) => x.value === option.value);
+              return foundOption ? String(foundOption.label) : '';
+            }
+            return '';
           }}
-          isOptionEqualToValue={(option, value) => option.value === value}
+          isOptionEqualToValue={(
+            option: string | { value: FieldPathValue<TFieldValues, TName>; label: ReactNode },
+            value: string | { value: FieldPathValue<TFieldValues, TName>; label: ReactNode } | null
+          ): boolean => {
+            if (value === null) return false;
+            if (typeof option === 'string' && typeof value === 'string') return option === value;
+            if (
+              typeof option === 'object' &&
+              typeof value === 'object' &&
+              option !== null &&
+              value !== null &&
+              'value' in option &&
+              'value' in value
+            ) {
+              return option.value === value.value;
+            }
+            if (
+              typeof option === 'object' &&
+              option !== null &&
+              'value' in option &&
+              typeof value === 'string'
+            ) {
+              return option.value === value;
+            }
+            if (
+              typeof option === 'string' &&
+              typeof value === 'object' &&
+              value !== null &&
+              'value' in value
+            ) {
+              return option === value.value;
+            }
+            return false;
+          }}
           onChange={(event, newValue) => {
             field.onChange(newValue);
           }}

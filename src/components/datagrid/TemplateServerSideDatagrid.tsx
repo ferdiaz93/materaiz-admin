@@ -102,7 +102,7 @@ export const TemplateServerSideDatagrid = ({
           {...props.serverSideOptions}
           rows={props.rows}
           slots={{
-            toolbar: CustomToolbar,
+            toolbar: CustomServerSideToolbar,
             noResultsOverlay: () => (
               <Stack height="100%" alignItems="center" justifyContent="center">
                 <img src={noresults} alt="Sin Resultados" />
