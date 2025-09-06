@@ -32,10 +32,15 @@ const navConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
-    subheader: 'whalemate',
+    subheader: 'materaiz',
     items: [
       {
         title: 'User',
+        path: PATHS.dashboard.adminUsers.root,
+        icon: ICONS.account,
+      },
+      {
+        title: 'Categorias',
         path: PATHS.dashboard.adminUsers.root,
         icon: ICONS.account,
       },
@@ -45,16 +50,17 @@ const navConfig = [
 
 const useNavConfig = () => {
   const authCtx = useAuthContext();
-  const visibleNavConfig: typeof navConfig = [];
-  navConfig.forEach((nav) => {
-    const visibleItems = nav.items.filter((item) => isPathAuthorized(authCtx.roles, item.path));
-    if (visibleItems.length > 0) {
-      visibleNavConfig.push({
-        ...nav,
-        items: visibleItems,
-      });
-    }
-  });
+  const visibleNavConfig: typeof navConfig = navConfig;
+  // navConfig.forEach((nav) => {
+  //   const visibleItems = nav.items.filter((item) => isPathAuthorized(authCtx.roles, item.path));
+  //   console.log('visibleItems', visibleItems);
+  //   if (visibleItems.length > 0) {
+  //     visibleNavConfig.push({
+  //       ...nav,
+  //       items: visibleItems,
+  //     });
+  //   }
+  // });
   return visibleNavConfig;
 };
 
