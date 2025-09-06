@@ -125,11 +125,11 @@ const ROUTES: RouteObject[] = [
         path: 'dashboard',
         errorElement: <ErrorPage />,
         element: (
-          <AuthGuard>
-            <RoleBasedGuard>
-              <DashboardLayout />
-            </RoleBasedGuard>
-          </AuthGuard>
+          // <AuthGuard>
+          //   <RoleBasedGuard>
+          <DashboardLayout />
+          // </RoleBasedGuard>
+          // </AuthGuard>
         ),
         children: [
           { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
