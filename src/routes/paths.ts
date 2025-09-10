@@ -23,6 +23,12 @@ export const PATHS = {
       create: '/dashboard/admin-users/create',
       edit: (id: number | string) => `/dashboard/admin-users/edit/${id}`,
     },
+    categories: {
+      root: '/dashboard/categories',
+      list: '/dashboard/categories/list',
+      create: '/dashboard/categories/create',
+      edit: (id: number | string) => `/dashboard/categories/edit/${id}`,
+    },
   },
 } as const;
 
