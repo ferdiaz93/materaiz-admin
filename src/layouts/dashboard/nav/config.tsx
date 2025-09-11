@@ -26,6 +26,7 @@ const ICONS = {
   myCourses: iconifyIcon('eva:book-open-outline'),
   account: iconifyIcon('eva:person-outline'),
   allCourses: iconifyIcon('eva:book-outline'),
+  grid: iconifyIcon('eva:grid-outline'),
 };
 
 const navConfig = [
@@ -40,9 +41,9 @@ const navConfig = [
         icon: ICONS.account,
       },
       {
-        title: 'Categorias',
-        path: PATHS.dashboard.adminUsers.root,
-        icon: ICONS.account,
+        title: 'Categorías',
+        path: PATHS.dashboard.categories.root,
+        icon: ICONS.grid,
       },
     ],
   },

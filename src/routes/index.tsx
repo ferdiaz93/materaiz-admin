@@ -83,6 +83,9 @@ const LazyResetPasswordPage = withLoadingSpinner(
 const LazySuccessfullyResetPasswordPage = withLoadingSpinner(
   lazy(() => import('src/features/auth/reset-password/SuccessfullyResetPasswordPage'))
 );
+const LazyCategoriesListPage = withLoadingSpinner(
+  lazy(() => import('src/features/categories/CategoriesListPage'))
+);
 
 const ROUTES: RouteObject[] = [
   {
@@ -140,6 +143,13 @@ const ROUTES: RouteObject[] = [
               { path: 'list', element: <LazyAdminUsersListPage /> },
               { path: 'create', element: <LazyAdminUsersCreatePage /> },
               { path: 'edit/:id', element: <LazyAdminUsersEditPage /> },
+            ],
+          },
+          {
+            path: 'categories',
+            children: [
+              { element: <Navigate to="/dashboard/categories/list" replace />, index: true },
+              { path: 'list', element: <LazyCategoriesListPage /> },
             ],
           },
         ],
