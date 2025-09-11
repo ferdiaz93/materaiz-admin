@@ -2,7 +2,6 @@ import { IconButton, MenuItem } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
 import {
   TemplateDataGridFilterResetButton,
   TemplateDatagrid,
@@ -13,7 +12,6 @@ import { TemplateFormActions, TemplateFormGrid, TemplateTextField } from 'src/co
 
 import Iconify from 'src/components/iconify';
 import MenuPopover from 'src/components/menu-popover';
-import { PATHS } from 'src/routes/paths';
 import { Category } from 'src/models/Category';
 import CategoriesEditModal from './CategoriesEditModal';
 
@@ -28,8 +26,14 @@ export const CategoriesDataGrid: React.FC<Props> = ({ data, isLoading, onDelete 
     defaultValues: { name: '' },
   });
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
   const [openEditModal, setOpenEditModal] = useState(false);
   const selectedIdRef = useRef<number | undefined>();
+
+  const handleOnCloseEditModal = () => {
+    setOpenEditModal(false);
+    setSelectedCategoryId(null);
+  };
 
   const columns = useColumns<(typeof data)[0]>([
     {
@@ -103,18 +107,19 @@ export const CategoriesDataGrid: React.FC<Props> = ({ data, isLoading, onDelete 
         <MenuItem
           onClick={() => {
             setOpenEditModal(true);
+            setSelectedCategoryId(selectedIdRef.current!);
           }}
         >
           <Iconify icon="eva:edit-fill" />
           Editar
         </MenuItem>
       </MenuPopover>
-      {selectedIdRef.current && (
+      {selectedCategoryId && (
         <CategoriesEditModal
           open={openEditModal}
-          onClose={() => setOpenEditModal(false)}
+          onClose={handleOnCloseEditModal}
           title="Editar Categoría"
-          categoryId={selectedIdRef.current}
+          categoryId={selectedCategoryId}
         />
       )}
     </Box>

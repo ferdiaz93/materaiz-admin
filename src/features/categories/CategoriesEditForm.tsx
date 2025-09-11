@@ -16,6 +16,7 @@ export type EditCategoryFormType = {
 type Props = {
   values?: EditCategoryFormType;
   onSubmit: (value: EditCategoryFormType) => Promise<any>;
+  isLoading?: boolean;
 };
 
 const EditCategorySchema: Yup.ObjectSchema<EditCategoryFormType> = Yup.object().shape({
@@ -26,7 +27,7 @@ const defaultValues: EditCategoryFormType = {
   name: '',
 };
 
-export default function CategoriesEditForm({ values, onSubmit }: Props) {
+export default function CategoriesEditForm({ values, onSubmit, isLoading }: Props) {
   const hf = useForm<EditCategoryFormType>({
     resolver: yupResolver(EditCategorySchema),
     defaultValues,

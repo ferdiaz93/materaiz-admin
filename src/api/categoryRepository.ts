@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Category } from 'src/models/Category';
 import { httpClient } from 'src/utils/httpClient';
 import { useSuspenseQuery } from 'src/utils/useSupenseQuery';
@@ -45,7 +45,7 @@ export const useAllCategoriesQuery = () =>
   useSuspenseQuery({ queryKey: repo.keys.all(), queryFn: repo.getAll });
 
 export const useCategoryQuery = (id: number) =>
-  useSuspenseQuery({ queryKey: repo.keys.one(id), queryFn: () => repo.find(id) });
+  useQuery({ queryKey: repo.keys.one(id), queryFn: () => repo.find(id) });
 
 export const useCreateCategoryMutation = () => {
   const qc = useQueryClient();

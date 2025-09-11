@@ -16,18 +16,18 @@ type Props = {
 export const CategoriesEditPage: React.FC<Props> = ({ open, onClose, title, categoryId }) => {
   const { enqueueSnackbar } = useSnackbar();
 
-  const editCategoryMutation = useEditCategoryMutation();
-  const categoryQuery = useCategoryQuery(categoryId);
+  const { mutateAsync: editCategoryMutation } = useEditCategoryMutation();
+  const { data: categoryQuery } = useCategoryQuery(categoryId);
 
   const handleCategoryUpdate = async (values: EditCategoryFormType) => {
-    await editCategoryMutation.mutateAsync({ ...values, id: categoryId });
+    await editCategoryMutation({ ...values, id: categoryId });
     enqueueSnackbar({ message: 'Categoría actualizada!' });
     onClose();
   };
 
   return (
     <CustomModal open={open} onClose={onClose} title={title}>
-      <CategoriesEditForm onSubmit={handleCategoryUpdate} values={categoryQuery.data} />
+      <CategoriesEditForm onSubmit={handleCategoryUpdate} values={categoryQuery} />
     </CustomModal>
   );
 };
