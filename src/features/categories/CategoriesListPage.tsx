@@ -1,34 +1,21 @@
 import { Button, Card, Container } from '@mui/material';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link as RouterLink } from 'react-router-dom';
-import { useAllUsersQuery, useDeleteUserMutation } from 'src/api/userRepository';
+import { useAllCategoriesQuery, useDeleteCategoryMutation } from 'src/api/categoryRepository';
 import { useConfirm } from 'src/components/confirm-action/ConfirmAction';
-import { PATHS } from 'src/routes/paths';
 import CustomBreadcrumbs from '../../components/custom-breadcrumbs';
 import Iconify from '../../components/iconify';
 import { useSettingsContext } from '../../components/settings';
-import { AdminUsersDataGrid } from './AdminUsersDataGrid';
+import { CategoriesDataGrid } from 'src/features/categories/CategoriesDataGrid';
 import { APP_NAME } from 'src/config';
-import { User, UserRoles } from 'src/models/User';
+import CategoriesCreateModal from './CategoriesCreateModal';
 
-export function AdminUserListPage() {
+export function CategoriesListPage() {
   const { themeStretch } = useSettingsContext();
   const confirm = useConfirm();
-  // const usersQuery = useAllUsersQuery();
-  const deleteUserMutation = useDeleteUserMutation();
-
-  const users: User[] = [
-    {
-      id: 1,
-      email: 'test@test.com',
-      roles: [UserRoles.USER],
-    },
-    {
-      id: 2,
-      email: 'test2@test.com',
-      roles: [UserRoles.USER, UserRoles.ADMIN],
-    },
-  ];
+  const deleteCategoryMutation = useDeleteCategoryMutation();
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+  const { data: categories = [] } = useAllCategoriesQuery();
 
   return (
     <>
@@ -38,16 +25,15 @@ export function AdminUserListPage() {
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading="Listado - Administradores"
+          heading="Listado - Categorías"
           links={[{ name: 'Listado' }]}
           action={
             <Button
-              to={PATHS.dashboard.adminUsers.create}
-              component={RouterLink}
+              onClick={() => setOpenCreateModal(true)}
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
             >
-              Nuevo Usuario
+              Nueva Categoría
             </Button>
           }
         />
@@ -57,19 +43,24 @@ export function AdminUserListPage() {
             height: 600,
           }}
         >
-          <AdminUsersDataGrid
-            data={users}
+          <CategoriesDataGrid
+            data={categories}
             isLoading={false}
             onDelete={(id) =>
               confirm({
-                action: () => deleteUserMutation.mutateAsync(id),
+                action: () => deleteCategoryMutation.mutateAsync(id),
               })
             }
           />
         </Card>
+        <CategoriesCreateModal
+          open={openCreateModal}
+          onClose={() => setOpenCreateModal(false)}
+          title="Crear Categoría"
+        />
       </Container>
     </>
   );
 }
 
-export default AdminUserListPage;
+export default CategoriesListPage;

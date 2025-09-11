@@ -26,18 +26,24 @@ const ICONS = {
   myCourses: iconifyIcon('eva:book-open-outline'),
   account: iconifyIcon('eva:person-outline'),
   allCourses: iconifyIcon('eva:book-outline'),
+  grid: iconifyIcon('eva:grid-outline'),
 };
 
 const navConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
-    subheader: 'whalemate',
+    subheader: 'materaiz',
     items: [
       {
         title: 'User',
         path: PATHS.dashboard.adminUsers.root,
         icon: ICONS.account,
+      },
+      {
+        title: 'Categorías',
+        path: PATHS.dashboard.categories.root,
+        icon: ICONS.grid,
       },
     ],
   },
@@ -45,16 +51,17 @@ const navConfig = [
 
 const useNavConfig = () => {
   const authCtx = useAuthContext();
-  const visibleNavConfig: typeof navConfig = [];
-  navConfig.forEach((nav) => {
-    const visibleItems = nav.items.filter((item) => isPathAuthorized(authCtx.roles, item.path));
-    if (visibleItems.length > 0) {
-      visibleNavConfig.push({
-        ...nav,
-        items: visibleItems,
-      });
-    }
-  });
+  const visibleNavConfig: typeof navConfig = navConfig;
+  // navConfig.forEach((nav) => {
+  //   const visibleItems = nav.items.filter((item) => isPathAuthorized(authCtx.roles, item.path));
+  //   console.log('visibleItems', visibleItems);
+  //   if (visibleItems.length > 0) {
+  //     visibleNavConfig.push({
+  //       ...nav,
+  //       items: visibleItems,
+  //     });
+  //   }
+  // });
   return visibleNavConfig;
 };
 

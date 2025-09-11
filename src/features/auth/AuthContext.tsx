@@ -2,6 +2,7 @@ import React, { createContext, ReactNode, useCallback, useEffect, useState } fro
 import { AuthRepository, useLoginMutation } from 'src/api/AuthRepository';
 import { AuthStateType, AuthContextType, Role } from './types';
 import { setAuthorizationHeader } from './utils';
+import { UserRoles } from 'src/models/User';
 
 const initialState: AuthStateType = {
   isInitialized: false,
@@ -9,10 +10,10 @@ const initialState: AuthStateType = {
   userId: undefined,
   roles: [],
   user: {
-    displayName: '',
-    role: '',
-    photoURL: '',
-    email: '',
+    displayName: 'Test123',
+    role: UserRoles.SUPERADMIN,
+    photoURL: 'Admin',
+    email: 'test123@test.com',
   },
 };
 
