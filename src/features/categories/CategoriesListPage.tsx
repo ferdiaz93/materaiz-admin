@@ -1,31 +1,21 @@
 import { Button, Card, Container } from '@mui/material';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link as RouterLink } from 'react-router-dom';
-import { useDeleteCategoryMutation } from 'src/api/categoryRepository';
+import { useAllCategoriesQuery, useDeleteCategoryMutation } from 'src/api/categoryRepository';
 import { useConfirm } from 'src/components/confirm-action/ConfirmAction';
-import { PATHS } from 'src/routes/paths';
 import CustomBreadcrumbs from '../../components/custom-breadcrumbs';
 import Iconify from '../../components/iconify';
 import { useSettingsContext } from '../../components/settings';
 import { CategoriesDataGrid } from 'src/features/categories/CategoriesDataGrid';
 import { APP_NAME } from 'src/config';
-import { Category } from 'src/models/Category';
+import CategoriesCreateModal from './CategoriesCreateModal';
 
 export function CategoriesListPage() {
   const { themeStretch } = useSettingsContext();
   const confirm = useConfirm();
   const deleteCategoryMutation = useDeleteCategoryMutation();
-
-  const categories: Category[] = [
-    {
-      id: 1,
-      name: 'Mate',
-    },
-    {
-      id: 2,
-      name: 'Termo',
-    },
-  ];
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+  const { data: categories = [] } = useAllCategoriesQuery();
 
   return (
     <>
@@ -39,8 +29,7 @@ export function CategoriesListPage() {
           links={[{ name: 'Listado' }]}
           action={
             <Button
-              to={PATHS.dashboard.categories.create}
-              component={RouterLink}
+              onClick={() => setOpenCreateModal(true)}
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
             >
@@ -64,6 +53,11 @@ export function CategoriesListPage() {
             }
           />
         </Card>
+        <CategoriesCreateModal
+          open={openCreateModal}
+          onClose={() => setOpenCreateModal(false)}
+          title="Crear Categoría"
+        />
       </Container>
     </>
   );

@@ -67,4 +67,4 @@ export const ENABLED_FEATURES = {
 
 export const LOGO = LogoIcon;
 
-export const APP_NAME = 'Minimal template';
+export const APP_NAME = 'Mate Raíz';

@@ -15,6 +15,7 @@ import Iconify from 'src/components/iconify';
 import MenuPopover from 'src/components/menu-popover';
 import { PATHS } from 'src/routes/paths';
 import { Category } from 'src/models/Category';
+import CategoriesEditModal from './CategoriesEditModal';
 
 interface Props {
   data: Category[];
@@ -27,6 +28,7 @@ export const CategoriesDataGrid: React.FC<Props> = ({ data, isLoading, onDelete 
     defaultValues: { name: '' },
   });
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+  const [openEditModal, setOpenEditModal] = useState(false);
   const selectedIdRef = useRef<number | undefined>();
 
   const columns = useColumns<(typeof data)[0]>([
@@ -98,11 +100,23 @@ export const CategoriesDataGrid: React.FC<Props> = ({ data, isLoading, onDelete 
           Eliminar
         </MenuItem>
 
-        <MenuItem component={Link} to={PATHS.dashboard.categories.edit(selectedIdRef.current!)}>
+        <MenuItem
+          onClick={() => {
+            setOpenEditModal(true);
+          }}
+        >
           <Iconify icon="eva:edit-fill" />
           Editar
         </MenuItem>
       </MenuPopover>
+      {selectedIdRef.current && (
+        <CategoriesEditModal
+          open={openEditModal}
+          onClose={() => setOpenEditModal(false)}
+          title="Editar Categoría"
+          categoryId={selectedIdRef.current}
+        />
+      )}
     </Box>
   );
 };
