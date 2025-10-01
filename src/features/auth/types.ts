@@ -17,15 +17,14 @@ export type AuthStateType = {
   isAuthenticated: boolean;
   isInitialized: boolean;
   userId: string | number | undefined;
-  roles: Role[];
   user: LoggedUser;
 };
 
 export type LoggedUser = {
   displayName: string;
-  role: string;
   photoURL: string;
   email: string;
+  name: string;
 };
 
 // ----------------------------------------------------------------------
@@ -35,9 +34,7 @@ export type AuthContextType = {
   isInitialized: boolean;
   login: (x: { email: string; password: string }) => Promise<any>;
   logout: () => void;
-  roles: Role[];
   userId: string | number | undefined;
-  isSuperAdmin: () => boolean;
   user: LoggedUser;
   fetchAndSetUserState: () => Promise<void>;
 };
