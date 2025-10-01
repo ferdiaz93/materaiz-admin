@@ -23,20 +23,21 @@ export class CategoryRepository {
   };
 
   getAll = async () => {
-    const { data } = await httpClient.get<any[]>('categories');
+    const { data } = await httpClient.get<any[]>('admin/categories');
     return data.map(getCategoryMapper);
   };
 
   find = async (id: number) => {
-    const { data } = await httpClient.get(`categories/${id}`);
+    const { data } = await httpClient.get(`admin/categories/${id}`);
     return getCategoryMapper(data);
   };
 
-  create = (category: ICreateCategory) => httpClient.post('categories', category);
+  create = (category: ICreateCategory) => httpClient.post('admin/categories', category);
 
-  edit = async (category: IEditCategory) => httpClient.put(`categories/${category.id}`, category);
+  edit = async (category: IEditCategory) =>
+    httpClient.put(`admin/categories/${category.id}`, category);
 
-  remove = async (id: number) => httpClient.delete(`categories/${id}`);
+  remove = async (id: number) => httpClient.delete(`admin/categories/${id}`);
 }
 
 const repo = new CategoryRepository();
