@@ -17,6 +17,11 @@ export default function MenuPopover({
 }: MenuPopoverProps) {
   const { style, anchorOrigin, transformOrigin } = getPosition(arrow);
 
+  // No renderizar el Popover si no hay elemento ancla
+  if (!open) {
+    return null;
+  }
+
   return (
     <Popover
       open={Boolean(open)}

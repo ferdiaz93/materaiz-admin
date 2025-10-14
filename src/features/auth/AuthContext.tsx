@@ -1,19 +1,17 @@
-import React, { createContext, ReactNode, useCallback, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { AuthRepository, useLoginMutation } from 'src/api/AuthRepository';
-import { AuthStateType, AuthContextType, Role } from './types';
+import { AuthStateType, AuthContextType } from './types';
 import { setAuthorizationHeader } from './utils';
-import { UserRoles } from 'src/models/User';
 
 const initialState: AuthStateType = {
   isInitialized: false,
   isAuthenticated: false,
   userId: undefined,
-  roles: [],
   user: {
     displayName: 'Test123',
-    role: UserRoles.SUPERADMIN,
     photoURL: 'Admin',
     email: 'test123@test.com',
+    name: 'Admin',
   },
 };
 
@@ -36,13 +34,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         ...x,
         isAuthenticated: true,
         userId: userData.id,
-        roles: userData.roles as Role[],
         isInitialized: true,
         user: {
           displayName: userData.email,
-          role: userData.roles[0],
-          photoURL: '',
+          photoURL: userData.name,
           email: userData.email,
+          name: userData.name,
         },
       }));
     } catch (error) {
@@ -62,6 +59,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const login = async ({ email, password }: { email: string; password: string }) => {
     const { data } = await loginMutation.mutateAsync({ email, password });
+    console.log('data', data);
     setAuthorizationHeader(data);
     await fetchAndSetUserState();
   };
@@ -70,8 +68,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setAuthorizationHeader(null);
     initializeState();
   }, []);
-
-  const isSuperAdmin = () => (state.roles ?? []).includes('super_admin');
 
   const initialize = useCallback(async () => {
     try {
@@ -98,7 +94,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         ...state,
         login,
         logout,
-        isSuperAdmin,
         fetchAndSetUserState,
       }}
     >
