@@ -13,7 +13,6 @@ import App from 'src/App';
 import { ElementType, lazy, Suspense } from 'react';
 import LoadingScreen from 'src/components/loading-screen';
 import { LoadingSpinner } from 'src/components/loading-spinner';
-import RoleBasedGuard from 'src/features/auth/RoleBasedGuard';
 import ErrorPage from 'src/pages/ErrorPage';
 import NotAllowedPage from 'src/pages/NotAllowedPage';
 
@@ -128,11 +127,9 @@ const ROUTES: RouteObject[] = [
         path: 'dashboard',
         errorElement: <ErrorPage />,
         element: (
-          // <AuthGuard>
-          //   <RoleBasedGuard>
-          <DashboardLayout />
-          // </RoleBasedGuard>
-          // </AuthGuard>
+          <AuthGuard>
+            <DashboardLayout />
+          </AuthGuard>
         ),
         children: [
           { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },

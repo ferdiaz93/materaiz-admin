@@ -12,7 +12,6 @@ interface ICreateAdminUser {
 
 interface IEditUser {
   email: string;
-  roles: string[];
   id: number;
 }
 
