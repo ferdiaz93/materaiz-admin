@@ -4,11 +4,11 @@ const environments = {
     production: false,
   },
   prod: {
-    backEnd: 'https://backend.com/api/',
+    backEnd: 'https://materaiz-back.onrender.com/api/',
     production: true,
   },
   local: {
-    backEnd: 'http://localhost:3000/api/',
+    backEnd: 'https://materaiz-back.onrender.com/api/', //apunta al environment online
     production: false,
   },
 };
@@ -21,6 +21,7 @@ const urlToEnvMap = {
 
 const { hostname } = window.location;
 
-const defaultEnv = environments.dev;
+const defaultEnv = environments.prod; //apunta al environment online
+//const defaultEnv = environments.local;
 
 export const environment = urlToEnvMap[hostname as keyof typeof urlToEnvMap] || defaultEnv;
