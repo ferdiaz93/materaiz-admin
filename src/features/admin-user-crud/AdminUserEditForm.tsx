@@ -6,14 +6,11 @@ import {
   TemplateForm,
   TemplateFormActions,
   TemplateFormSubmitButton,
-  TemplateMultiSelectField,
   TemplateTextField,
 } from 'src/components/form';
-import { ROLES } from 'src/models/User';
 
 export type EditUserFormType = {
   email: string;
-  roles: string[];
 };
 
 type Props = {
@@ -30,7 +27,6 @@ const EditUserSchema: Yup.ObjectSchema<EditUserFormType> = Yup.object().shape({
 
 const defaultValues: EditUserFormType = {
   email: '',
-  roles: [],
 };
 
 export default function AdminUserEditForm({ values, onSubmit }: Props) {
@@ -44,10 +40,6 @@ export default function AdminUserEditForm({ values, onSubmit }: Props) {
   return (
     <TemplateForm hf={hf} onSubmit={onSubmit}>
       <Controller name="email" render={(field) => <TemplateTextField {...field} label="Email" />} />
-      <Controller
-        name="roles"
-        render={(field) => <TemplateMultiSelectField {...field} label="Roles" options={ROLES} />}
-      />
       <TemplateFormActions>
         <TemplateFormSubmitButton>Guardar</TemplateFormSubmitButton>
       </TemplateFormActions>
