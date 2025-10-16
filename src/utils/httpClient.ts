@@ -20,6 +20,19 @@ export const httpClient = axios.create({
 //   return Promise.reject(error);
 // });
 
+// Interceptor para agregar el token
+httpClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      config.headers = config.headers || {};
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 // Interceptor para agregar multipart/form-data si hay archivos en la petición y cambiar el método a POST si es PUT y hay archivos
 httpClient.interceptors.request.use(
   (config) => {
@@ -36,13 +49,11 @@ httpClient.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-export const hasImage = (object: Object): boolean => {
-  return Object.entries(object).some(([key, value]) => {
+export const hasImage = (object: Object): boolean =>
+  Object.entries(object).some(([key, value]) => {
     if (value instanceof File || value instanceof Blob) {
       return true;
     }
@@ -51,4 +62,3 @@ export const hasImage = (object: Object): boolean => {
     }
     return false;
   });
-};

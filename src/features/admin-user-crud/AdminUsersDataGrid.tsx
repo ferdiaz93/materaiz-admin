@@ -29,7 +29,7 @@ interface Props {
 
 export const AdminUsersDataGrid: React.FC<Props> = ({ data, isLoading, onDelete }) => {
   const hf = useForm({
-    defaultValues: { email: '', roles: [] },
+    defaultValues: { email: '' },
   });
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const selectedIdRef = useRef<number | undefined>();
@@ -39,12 +39,6 @@ export const AdminUsersDataGrid: React.FC<Props> = ({ data, isLoading, onDelete 
       field: 'email',
       headerName: 'Email',
       type: 'string',
-    },
-    {
-      field: 'roles',
-      headerName: 'Roles',
-      type: 'array',
-      renderAs: 'badge',
     },
     {
       field: 'action',
@@ -76,17 +70,6 @@ export const AdminUsersDataGrid: React.FC<Props> = ({ data, isLoading, onDelete 
                 name="email"
                 render={(field) => (
                   <TemplateTextField {...field} label="Email" placeholder="john_doe@example.com" />
-                )}
-              />
-              <Controller
-                name="roles"
-                render={(field) => (
-                  <TemplateMultiAutocompleteField
-                    {...field}
-                    label="Roles"
-                    options={ROLES}
-                    placeholder="Selecciona roles"
-                  />
                 )}
               />
               <TemplateFormActions>
