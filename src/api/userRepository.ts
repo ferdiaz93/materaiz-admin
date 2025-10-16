@@ -7,7 +7,7 @@ interface ICreateAdminUser {
   email: string;
   password: string;
   password_confirmation: string;
-  roles: string[];
+  roles?: string[];
 }
 
 interface IEditUser {
