@@ -29,10 +29,6 @@ export default function NavAccount() {
         <Typography variant="subtitle2" noWrap>
           {user?.displayName}
         </Typography>
-
-        <Typography variant="body2" noWrap sx={{ color: 'text.secondary' }}>
-          {user?.role}
-        </Typography>
       </Box>
     </StyledRoot>
   );

@@ -59,7 +59,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const login = async ({ email, password }: { email: string; password: string }) => {
     const { data } = await loginMutation.mutateAsync({ email, password });
-    console.log('data', data);
     setAuthorizationHeader(data);
     await fetchAndSetUserState();
   };

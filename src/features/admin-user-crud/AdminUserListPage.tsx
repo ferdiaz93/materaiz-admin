@@ -9,26 +9,12 @@ import Iconify from '../../components/iconify';
 import { useSettingsContext } from '../../components/settings';
 import { AdminUsersDataGrid } from './AdminUsersDataGrid';
 import { APP_NAME } from 'src/config';
-import { User, UserRoles } from 'src/models/User';
 
 export function AdminUserListPage() {
   const { themeStretch } = useSettingsContext();
   const confirm = useConfirm();
-  // const usersQuery = useAllUsersQuery();
+  const usersQuery = useAllUsersQuery();
   const deleteUserMutation = useDeleteUserMutation();
-
-  const users: User[] = [
-    {
-      id: 1,
-      email: 'test@test.com',
-      roles: [UserRoles.USER],
-    },
-    {
-      id: 2,
-      email: 'test2@test.com',
-      roles: [UserRoles.USER, UserRoles.ADMIN],
-    },
-  ];
 
   return (
     <>
@@ -58,7 +44,7 @@ export function AdminUserListPage() {
           }}
         >
           <AdminUsersDataGrid
-            data={users}
+            data={usersQuery.data}
             isLoading={false}
             onDelete={(id) =>
               confirm({
