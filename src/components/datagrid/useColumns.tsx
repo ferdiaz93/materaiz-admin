@@ -81,11 +81,13 @@ const stringColumn: Partial<GridColDef> = {
 };
 
 const arrayColumn: Partial<GridColDef> = {
-  renderCell: (params) => (params.value.length > 0 ? params.value.join(', ') : '-'),
+  renderCell: (params) =>
+    Array.isArray(params.value) && params.value.length > 0 ? params.value.join(', ') : '-',
   flex: 1,
   type: 'string',
   sortable: false,
-  valueFormatter: (params) => (params.value.length > 0 ? params.value.join(', ') : '-'),
+  valueFormatter: (params) =>
+    Array.isArray(params.value) && params.value.length > 0 ? params.value.join(', ') : '-',
 };
 
 const momentDateColumn: Partial<GridColDef> = {

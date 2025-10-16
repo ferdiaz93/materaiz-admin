@@ -7,7 +7,7 @@ interface ICreateAdminUser {
   email: string;
   password: string;
   password_confirmation: string;
-  roles: string[];
+  roles?: string[];
 }
 
 interface IEditUser {
@@ -32,12 +32,12 @@ export class UserRepository {
   };
 
   getAll = async () => {
-    const { data } = await httpClient.get<any[]>('admin-users');
+    const { data } = await httpClient.get<any[]>('admin/admin-users');
     return data.map(getUserMapper);
   };
 
   find = async (id: number) => {
-    const { data } = await httpClient.get(`admin-users/${id}`);
+    const { data } = await httpClient.get(`admin/admin-users/${id}`);
     return getUserMapper(data);
   };
 
