@@ -8,7 +8,7 @@ const environments = {
     production: true,
   },
   local: {
-    backEnd: 'https://materaiz-back.onrender.com/api/', //apunta al environment online
+    backEnd: 'http://localhost:3000/api/',
     production: false,
   },
 };

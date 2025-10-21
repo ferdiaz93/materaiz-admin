@@ -27,6 +27,12 @@ export const PATHS = {
       root: '/dashboard/categories',
       list: '/dashboard/categories/list',
     },
+    products: {
+      root: '/dashboard/products',
+      list: '/dashboard/products/list',
+      create: '/dashboard/products/create',
+      edit: (id: number | string) => `/dashboard/products/edit/${id}`,
+    },
   },
 } as const;
 
