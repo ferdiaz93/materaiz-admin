@@ -13,7 +13,7 @@ export type TemplateNumberFieldProps<
     field: {
       onChange: (...event: any[]) => void;
       onBlur: Noop;
-      value: string;
+      value: string | number;
       name: TName;
       ref: RefCallBack;
     };

@@ -85,6 +85,15 @@ const LazySuccessfullyResetPasswordPage = withLoadingSpinner(
 const LazyCategoriesListPage = withLoadingSpinner(
   lazy(() => import('src/features/categories/CategoriesListPage'))
 );
+const LazyProductsListPage = withLoadingSpinner(
+  lazy(() => import('src/features/products/ProductsListPage'))
+);
+const LazyProductsCreatePage = withLoadingSpinner(
+  lazyWithReload(() => import('src/features/products/ProductsCreatePage'))
+);
+const LazyProductsEditPage = withLoadingSpinner(
+  lazyWithReload(() => import('src/features/products/ProductsEditPage'))
+);
 
 const ROUTES: RouteObject[] = [
   {
@@ -147,6 +156,15 @@ const ROUTES: RouteObject[] = [
             children: [
               { element: <Navigate to="/dashboard/categories/list" replace />, index: true },
               { path: 'list', element: <LazyCategoriesListPage /> },
+            ],
+          },
+          {
+            path: 'products',
+            children: [
+              { element: <Navigate to="/dashboard/products/list" replace />, index: true },
+              { path: 'list', element: <LazyProductsListPage /> },
+              { path: 'create', element: <LazyProductsCreatePage /> },
+              { path: 'edit/:id', element: <LazyProductsEditPage /> },
             ],
           },
         ],
