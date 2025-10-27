@@ -36,7 +36,17 @@ export const ProductsEditPage = () => {
         />
 
         <Card sx={{ p: 3 }}>
-          <ProductEditForm onSubmit={handleProductUpdate} values={productQuery.data} />
+          {productQuery.data && (
+            <ProductEditForm
+              onSubmit={handleProductUpdate}
+              values={{
+                name: productQuery.data.name ?? '',
+                original_price: productQuery.data.original_price,
+                discount_price:
+                  productQuery.data.discount_price ?? productQuery.data.original_price,
+              }}
+            />
+          )}
         </Card>
       </Container>
     </>
