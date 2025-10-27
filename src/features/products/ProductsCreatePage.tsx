@@ -16,9 +16,23 @@ export const ProductsCreatePage = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (values: CreateProductFormType) => {
-    await createProductMutation.mutateAsync(values);
-    enqueueSnackbar({ message: 'Producto agregado!' });
-    navigate(PATHS.dashboard.products.list);
+    try {
+      const payload = {
+        ...values,
+        category_id: 1, // Hardcodeado temporalmente para probar el alta de productos
+        images: [{ image_url: values.image }], //agregado para que coincida con el front principal
+      };
+
+      await createProductMutation.mutateAsync(payload);
+      enqueueSnackbar({ message: 'Producto agregado!' });
+      navigate(PATHS.dashboard.products.list);
+    } catch (error: any) {
+      console.error('Error al crear producto:', error);
+      enqueueSnackbar({
+        message: 'Error al crear producto',
+        variant: 'error',
+      });
+    }
   };
 
   return (
