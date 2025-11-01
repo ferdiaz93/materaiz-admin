@@ -94,6 +94,9 @@ const LazyProductsCreatePage = withLoadingSpinner(
 const LazyProductsEditPage = withLoadingSpinner(
   lazyWithReload(() => import('src/features/products/ProductsEditPage'))
 );
+const LazyOrdersListPage = withLoadingSpinner(
+  lazyWithReload(() => import('src/features/orders/OrdersListPage'))
+);
 
 const ROUTES: RouteObject[] = [
   {
@@ -165,6 +168,13 @@ const ROUTES: RouteObject[] = [
               { path: 'list', element: <LazyProductsListPage /> },
               { path: 'create', element: <LazyProductsCreatePage /> },
               { path: 'edit/:id', element: <LazyProductsEditPage /> },
+            ],
+          },
+          {
+            path: 'orders',
+            children: [
+              { element: <Navigate to="/dashboard/orders/list" replace />, index: true },
+              { path: 'list', element: <LazyOrdersListPage /> },
             ],
           },
         ],

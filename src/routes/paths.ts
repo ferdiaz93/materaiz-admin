@@ -33,6 +33,10 @@ export const PATHS = {
       create: '/dashboard/products/create',
       edit: (id: number | string) => `/dashboard/products/edit/${id}`,
     },
+    orders: {
+      root: '/dashboard/orders',
+      list: '/dashboard/orders/list',
+    },
   },
 } as const;
 

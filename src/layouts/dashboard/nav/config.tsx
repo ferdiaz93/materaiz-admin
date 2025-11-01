@@ -50,6 +50,11 @@ const navConfig = [
         path: PATHS.dashboard.products.root,
         icon: ICONS.allCourses,
       },
+      {
+        title: 'Compras',
+        path: PATHS.dashboard.orders.root,
+        icon: ICONS.myCourses,
+      },
     ],
   },
 ];
