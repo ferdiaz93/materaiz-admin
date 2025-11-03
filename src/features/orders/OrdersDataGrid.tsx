@@ -12,7 +12,7 @@ import { TemplateFormActions, TemplateFormGrid, TemplateTextField } from 'src/co
 
 import Iconify from 'src/components/iconify';
 import MenuPopover from 'src/components/menu-popover';
-import { Order } from 'src/api/OrderRepository';
+import { Order } from 'src/api/orderRepository';
 
 interface Props {
   data: Order[];

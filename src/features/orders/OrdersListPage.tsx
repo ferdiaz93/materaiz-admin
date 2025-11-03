@@ -1,6 +1,6 @@
 import { Card, Container } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
-import { useAllOrdersQuery, useDeleteOrderMutation } from 'src/api/OrderRepository';
+import { useAllOrdersQuery, useDeleteOrderMutation } from 'src/api/orderRepository';
 import { useConfirm } from 'src/components/confirm-action/ConfirmAction';
 import { OrdersDataGrid } from './OrdersDataGrid';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
