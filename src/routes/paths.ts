@@ -36,6 +36,7 @@ export const PATHS = {
     orders: {
       root: '/dashboard/orders',
       list: '/dashboard/orders/list',
+      details: (id: number | string) => `/dashboard/orders/details/${id}`,
     },
   },
 } as const;

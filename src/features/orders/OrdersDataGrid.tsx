@@ -13,6 +13,8 @@ import { TemplateFormActions, TemplateFormGrid, TemplateTextField } from 'src/co
 import Iconify from 'src/components/iconify';
 import MenuPopover from 'src/components/menu-popover';
 import { Order } from 'src/api/orderRepository';
+import { PATHS } from 'src/routes/paths';
+import { Link } from 'react-router-dom';
 
 interface Props {
   data: Order[];
@@ -116,6 +118,11 @@ export const OrdersDataGrid: React.FC<Props> = ({ data, isLoading, onDelete }) =
         >
           <Iconify icon="eva:trash-2-outline" />
           Eliminar
+        </MenuItem>
+
+        <MenuItem component={Link} to={PATHS.dashboard.orders.details(selectedIdRef.current!)}>
+          <Iconify icon="eva:eye-fill" />
+          Ver detalles
         </MenuItem>
       </MenuPopover>
     </Box>

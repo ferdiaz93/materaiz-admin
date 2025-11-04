@@ -16,11 +16,11 @@ export function OrdersListPage() {
   return (
     <>
       <Helmet>
-        <title> Órdenes | {APP_NAME} </title>
+        <title> Órdenes de compra| {APP_NAME} </title>
       </Helmet>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
-        <CustomBreadcrumbs heading="Listado - Órdenes" links={[{ name: 'Listado' }]} />
+        <CustomBreadcrumbs heading="Listado - Órdenes de compra" links={[{ name: 'Listado' }]} />
 
         <Card sx={{ height: 600 }}>
           <OrdersDataGrid

@@ -14,6 +14,7 @@ import { useSnackbar } from 'src/components/snackbar';
 import { PATHS } from 'src/routes/paths';
 import AdminUserChangePasswordForm, { ChangePasswordFormType } from './AdminUserChangePasswordForm';
 import AdminUserEditForm, { EditUserFormType } from './AdminUserEditForm';
+import { APP_NAME } from 'src/config';
 
 export const AdminUserEditPage = () => {
   const params = useParams<{ id: string }>();
@@ -42,7 +43,7 @@ export const AdminUserEditPage = () => {
   return (
     <>
       <Helmet>
-        <title> Panel Administrativo | TheGelatina</title>
+        <title> Panel Administrativo | {APP_NAME}</title>
       </Helmet>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
