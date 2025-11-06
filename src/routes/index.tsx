@@ -97,6 +97,9 @@ const LazyProductsEditPage = withLoadingSpinner(
 const LazyOrdersListPage = withLoadingSpinner(
   lazyWithReload(() => import('src/features/orders/OrdersListPage'))
 );
+const LazyOrdersDetailPage = withLoadingSpinner(
+  lazyWithReload(() => import('src/features/orders/OrdersDetailPage'))
+);
 
 const ROUTES: RouteObject[] = [
   {
@@ -175,6 +178,7 @@ const ROUTES: RouteObject[] = [
             children: [
               { element: <Navigate to="/dashboard/orders/list" replace />, index: true },
               { path: 'list', element: <LazyOrdersListPage /> },
+              { path: 'details/:id', element: <LazyOrdersDetailPage /> },
             ],
           },
         ],

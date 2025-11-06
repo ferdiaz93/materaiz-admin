@@ -1,0 +1,115 @@
+import { Box, Card, Container, Divider, Typography } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
+import { useParams } from 'react-router';
+import { useSettingsContext } from 'src/components/settings';
+import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
+import { PATHS } from 'src/routes/paths';
+import { useOrderQuery } from 'src/api/orderRepository';
+import LoadingScreen from 'src/components/loading-screen';
+import moment from 'moment';
+import { APP_NAME } from 'src/config';
+
+export const OrdersDetailPage = () => {
+  const params = useParams<{ id: string }>();
+  const { themeStretch } = useSettingsContext();
+  const orderQuery = useOrderQuery(Number(params.id));
+
+  if (orderQuery.isLoading) return <LoadingScreen />;
+
+  const order = orderQuery.data;
+
+  return (
+    <>
+      <Helmet>
+        <title>Detalle de compra | {APP_NAME}</title>
+      </Helmet>
+
+      <Container maxWidth={themeStretch ? false : 'lg'}>
+        <CustomBreadcrumbs
+          heading="Detalle de la compra"
+          links={[
+            { name: 'Compras', href: PATHS.dashboard.orders.list },
+            { name: `Compra #${params.id}` },
+          ]}
+        />
+
+        <Card sx={{ p: 3, mb: 3 }}>
+          <Typography variant="h6" gutterBottom>
+            Información del cliente
+          </Typography>
+          <Divider sx={{ mb: 2 }} />
+          <Box sx={{ display: 'grid', gap: 1 }}>
+            <Typography>
+              <Typography component="span" fontWeight="bold">
+                Cliente:
+              </Typography>{' '}
+              {order.first_name} {order.last_name}
+            </Typography>
+            <Typography>
+              <Typography component="span" fontWeight="bold">
+                Email:
+              </Typography>{' '}
+              {order.email}
+            </Typography>
+            <Typography>
+              <Typography component="span" fontWeight="bold">
+                Teléfono:
+              </Typography>{' '}
+              {order.phone}
+            </Typography>
+            <Typography>
+              <Typography component="span" fontWeight="bold">
+                Fecha:
+              </Typography>{' '}
+              {moment(order.created_at).format('DD/MM/YYYY HH:mm')}
+            </Typography>
+            <Typography>
+              <Typography component="span" fontWeight="bold">
+                Total:
+              </Typography>{' '}
+              ${Number(order.total_amount).toLocaleString()}
+            </Typography>
+          </Box>
+        </Card>
+        <Card sx={{ p: 3 }}>
+          <Typography variant="h6" gutterBottom>
+            Productos comprados
+          </Typography>
+          <Divider sx={{ mb: 2 }} />
+          {order.items?.map((item) => (
+            <Box
+              key={item.id}
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                borderBottom: '1px solid #eee',
+                py: 1.5,
+              }}
+            >
+              <Box>
+                <Typography component="span" fontWeight="bold">
+                  {item.product_name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Cantidad: {item.quantity}
+                </Typography>
+              </Box>
+              <Typography>${(Number(item.unit_price) * item.quantity).toLocaleString()}</Typography>
+            </Box>
+          ))}
+
+          <Divider sx={{ my: 2 }} />
+          <Typography align="right" variant="subtitle1">
+            <Typography component="span" fontWeight="bold">
+              Total:
+            </Typography>{' '}
+            ${Number(order.total_amount).toLocaleString()}
+          </Typography>
+        </Card>
+      </Container>
+    </>
+  );
+};
+
+export default OrdersDetailPage;

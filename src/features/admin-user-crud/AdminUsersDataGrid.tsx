@@ -9,16 +9,11 @@ import {
   TemplateDatagridFilterSubmitButton,
   useColumns,
 } from 'src/components/datagrid';
-import {
-  TemplateFormActions,
-  TemplateFormGrid,
-  TemplateMultiAutocompleteField,
-  TemplateTextField,
-} from 'src/components/form';
+import { TemplateFormActions, TemplateFormGrid, TemplateTextField } from 'src/components/form';
 
 import Iconify from 'src/components/iconify';
 import MenuPopover from 'src/components/menu-popover';
-import { ROLES, User } from 'src/models/User';
+import { User } from 'src/models/User';
 import { PATHS } from 'src/routes/paths';
 
 interface Props {
