@@ -19,7 +19,7 @@ export type ContactMessage = {
   updated_at: string;
 };
 
-export class ContactRepository {
+export class ContactMessageRepository {
   keys = {
     all: () => ['contact-messages'],
     create: () => ['contact-messages', 'create'],
@@ -40,14 +40,13 @@ export class ContactRepository {
   };
 }
 
-const repo = new ContactRepository();
+const repo = new ContactMessageRepository();
 
 export const useAllContactMessagesQuery = () =>
   useSuspenseQuery({ queryKey: repo.keys.all(), queryFn: repo.getAll });
 
 export const useContactMutation = () =>
   useMutation({
-    mutationKey: repo.keys.create(),
     mutationFn: repo.create,
     onSuccess: () => ({
       message: 'Consulta enviada con éxito',
@@ -58,6 +57,7 @@ export const useContactMutation = () =>
       variant: 'error' as const,
     }),
   });
+
 export const useContactMessageQuery = (id: number) =>
   useSuspenseQuery({
     queryKey: repo.keys.detail(id),
