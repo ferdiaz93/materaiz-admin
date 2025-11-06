@@ -100,6 +100,12 @@ const LazyOrdersListPage = withLoadingSpinner(
 const LazyOrdersDetailPage = withLoadingSpinner(
   lazyWithReload(() => import('src/features/orders/OrdersDetailPage'))
 );
+const LazyContactMessagesListPage = withLoadingSpinner(
+  lazyWithReload(() => import('src/features/contact-messages/ContactMessagesListPage'))
+);
+const LazyContactMessagesDetailPage = withLoadingSpinner(
+  lazyWithReload(() => import('src/features/contact-messages/ContactMessageDetailPage'))
+);
 
 const ROUTES: RouteObject[] = [
   {
@@ -179,6 +185,14 @@ const ROUTES: RouteObject[] = [
               { element: <Navigate to="/dashboard/orders/list" replace />, index: true },
               { path: 'list', element: <LazyOrdersListPage /> },
               { path: 'details/:id', element: <LazyOrdersDetailPage /> },
+            ],
+          },
+          {
+            path: 'contact-messages',
+            children: [
+              { element: <Navigate to="/dashboard/contact-messages/list" replace />, index: true },
+              { path: 'list', element: <LazyContactMessagesListPage /> },
+              { path: 'details/:id', element: <LazyContactMessagesDetailPage /> },
             ],
           },
         ],
