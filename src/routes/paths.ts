@@ -38,6 +38,11 @@ export const PATHS = {
       list: '/dashboard/orders/list',
       details: (id: number | string) => `/dashboard/orders/details/${id}`,
     },
+    contactMessages: {
+      root: '/dashboard/contact-messages',
+      list: '/dashboard/contact-messages/list',
+      details: (id: number | string) => `/dashboard/contact-messages/details/${id}`,
+    },
   },
 } as const;
 

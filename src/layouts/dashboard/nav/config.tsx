@@ -27,6 +27,7 @@ const ICONS = {
   account: iconifyIcon('eva:person-outline'),
   allCourses: iconifyIcon('eva:book-outline'),
   grid: iconifyIcon('eva:grid-outline'),
+  message: iconifyIcon('eva:message-square-outline'),
 };
 
 const navConfig = [
@@ -54,6 +55,11 @@ const navConfig = [
         title: 'Compras',
         path: PATHS.dashboard.orders.root,
         icon: ICONS.myCourses,
+      },
+      {
+        title: 'Consultas',
+        path: PATHS.dashboard.contactMessages.root,
+        icon: ICONS.message,
       },
     ],
   },
