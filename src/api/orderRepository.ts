@@ -34,6 +34,8 @@ export interface Order {
   phone: string;
   total_amount: number;
   created_at: string;
+  is_home_delivery: boolean;
+  shipping_cost: number;
   items: {
     id: number;
     product_id: number;
@@ -91,3 +93,11 @@ export const useDeleteOrderMutation = () => {
     },
   });
 };
+
+export const useMarkOrderAsShippedMutation = () =>
+  useMutation({
+    mutationFn: async (orderId: number) => {
+      const res = await httpClient.patch(`/admin/orders/${orderId}/ship`);
+      return res.data;
+    },
+  });

@@ -4,19 +4,30 @@ import { useParams } from 'react-router';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { PATHS } from 'src/routes/paths';
-import { useOrderQuery } from 'src/api/orderRepository';
+import { useOrderQuery, useMarkOrderAsShippedMutation } from 'src/api/orderRepository';
 import LoadingScreen from 'src/components/loading-screen';
 import moment from 'moment';
 import { APP_NAME } from 'src/config';
+import { LoadingButton } from '@mui/lab';
 
 export const OrdersDetailPage = () => {
   const params = useParams<{ id: string }>();
   const { themeStretch } = useSettingsContext();
   const orderQuery = useOrderQuery(Number(params.id));
-
+  const markShippedMutation = useMarkOrderAsShippedMutation();
   if (orderQuery.isLoading) return <LoadingScreen />;
 
   const order = orderQuery.data;
+
+  const handleMarkAsShipped = async () => {
+    try {
+      await markShippedMutation.mutateAsync(order.id);
+      alert('Orden marcada como enviada');
+    } catch (err: any) {
+      console.error(err);
+      alert('Error al actualizar');
+    }
+  };
 
   return (
     <>
@@ -32,6 +43,15 @@ export const OrdersDetailPage = () => {
             { name: `Compra #${params.id}` },
           ]}
         />
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+          <LoadingButton
+            variant="contained"
+            loading={markShippedMutation.isLoading}
+            onClick={handleMarkAsShipped}
+          >
+            Marcar como enviado
+          </LoadingButton>
+        </Box>
 
         <Card sx={{ p: 3, mb: 3 }}>
           <Typography variant="h6" gutterBottom>
@@ -65,6 +85,12 @@ export const OrdersDetailPage = () => {
             </Typography>
             <Typography>
               <Typography component="span" fontWeight="bold">
+                Tipo de entrega:
+              </Typography>{' '}
+              {order.is_home_delivery ? 'Envío a domicilio' : 'Retiro por local'}
+            </Typography>
+            <Typography>
+              <Typography component="span" fontWeight="bold">
                 Total:
               </Typography>{' '}
               ${Number(order.total_amount).toLocaleString()}
@@ -76,6 +102,7 @@ export const OrdersDetailPage = () => {
             Productos comprados
           </Typography>
           <Divider sx={{ mb: 2 }} />
+
           {order.items?.map((item) => (
             <Box
               key={item.id}
@@ -99,7 +126,31 @@ export const OrdersDetailPage = () => {
             </Box>
           ))}
 
+          {order.is_home_delivery && (
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                borderBottom: '1px solid #eee',
+                py: 1.5,
+              }}
+            >
+              <Box>
+                <Typography component="span" fontWeight="bold">
+                  Costo de envío
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Envío a domicilio
+                </Typography>
+              </Box>
+
+              <Typography>${Number(order.shipping_cost).toLocaleString()}</Typography>
+            </Box>
+          )}
+
           <Divider sx={{ my: 2 }} />
+
           <Typography align="right" variant="subtitle1">
             <Typography component="span" fontWeight="bold">
               Total:

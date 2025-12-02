@@ -25,10 +25,13 @@ const CreateProductSchema: Yup.ObjectSchema<CreateProductFormType> = Yup.object(
     .positive('El precio original debe ser mayor a 0')
     .required('El precio original es requerido'),
   discount_price: Yup.number()
-    .typeError('El precio con descuento debe ser un número')
-    .positive('El precio con descuento debe ser mayor a 0')
-    .max(Yup.ref('original_price'), 'El precio con descuento no puede ser mayor al original')
-    .nullable(),
+    .transform((value, originalValue) =>
+      originalValue === '' || originalValue === null ? null : value
+    )
+    .nullable()
+    .optional()
+    .positive('Debe ser mayor a 0')
+    .max(Yup.ref('original_price'), 'No puede ser mayor al precio original'),
   image: Yup.string().required('La imagen es requerida'),
 });
 
@@ -36,7 +39,7 @@ const defaultValues: CreateProductFormType = {
   name: '',
   description: '',
   original_price: 0,
-  discount_price: 0,
+  discount_price: null,
   image: '',
 };
 
