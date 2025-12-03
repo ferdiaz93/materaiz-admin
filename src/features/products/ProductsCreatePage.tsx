@@ -19,7 +19,7 @@ export const ProductsCreatePage = () => {
     try {
       const payload = {
         ...values,
-        category_id: 1, // Hardcodeado temporalmente para probar el alta de productos
+        category_id: values.category_id,
         images: [{ image_url: values.image }], //agregado para que coincida con el front principal
       };
 

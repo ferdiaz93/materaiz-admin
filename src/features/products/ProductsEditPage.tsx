@@ -7,6 +7,7 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { PATHS } from 'src/routes/paths';
 import { useProductQuery, useEditProductMutation } from 'src/api/productRepository';
 import ProductEditForm, { EditProductFormType } from './ProductEditForm';
+import { useAllCategoriesQuery } from 'src/api/categoryRepository';
 
 export const ProductsEditPage = () => {
   const params = useParams<{ id: string }>();
@@ -15,6 +16,7 @@ export const ProductsEditPage = () => {
   const { themeStretch } = useSettingsContext();
 
   const productQuery = useProductQuery(Number(params.id));
+  const categoriesQuery = useAllCategoriesQuery();
   const editProductMutation = useEditProductMutation();
 
   const handleProductUpdate = async (values: EditProductFormType) => {
@@ -36,7 +38,7 @@ export const ProductsEditPage = () => {
         />
 
         <Card sx={{ p: 3 }}>
-          {productQuery.data && (
+          {productQuery.data && categoriesQuery.data && (
             <ProductEditForm
               onSubmit={handleProductUpdate}
               values={{
@@ -44,7 +46,9 @@ export const ProductsEditPage = () => {
                 original_price: productQuery.data.original_price,
                 discount_price:
                   productQuery.data.discount_price ?? productQuery.data.original_price,
+                category_id: productQuery.data.category_id,
               }}
+              categories={categoriesQuery.data}
             />
           )}
         </Card>
