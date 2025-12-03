@@ -78,6 +78,7 @@ export const ProductsDataGrid: React.FC<Props> = ({ data, isLoading, onDelete })
         disableRowSelectionOnClick
         rows={data}
         columns={columns}
+        getRowId={(row) => row.id}
       />
 
       <MenuPopover

@@ -7,7 +7,9 @@ import {
   TemplateFormActions,
   TemplateFormSubmitButton,
   TemplateNumberField,
+  TemplateSelectField,
 } from 'src/components/form';
+import { useAllCategoriesQuery } from 'src/api/categoryRepository';
 
 export type CreateProductFormType = {
   name: string;
@@ -15,6 +17,7 @@ export type CreateProductFormType = {
   original_price: number;
   discount_price?: number | null;
   image: string;
+  category_id: number;
 };
 
 const CreateProductSchema: Yup.ObjectSchema<CreateProductFormType> = Yup.object().shape({
@@ -33,6 +36,11 @@ const CreateProductSchema: Yup.ObjectSchema<CreateProductFormType> = Yup.object(
     .positive('Debe ser mayor a 0')
     .max(Yup.ref('original_price'), 'No puede ser mayor al precio original'),
   image: Yup.string().required('La imagen es requerida'),
+  category_id: Yup.number()
+    .typeError('La categoría es requerida')
+    .positive('Debe seleccionar una categoría')
+    .required('La categoría es requerida')
+    .moreThan(0, 'Debe seleccionar una categoría válida'),
 });
 
 const defaultValues: CreateProductFormType = {
@@ -41,6 +49,7 @@ const defaultValues: CreateProductFormType = {
   original_price: 0,
   discount_price: null,
   image: '',
+  category_id: 0,
 };
 
 type Props = {
@@ -53,6 +62,7 @@ export default function ProductCreateForm({ onSubmit }: Props) {
     defaultValues,
     mode: 'onBlur',
   });
+  const { data: categories } = useAllCategoriesQuery();
 
   return (
     <TemplateForm hf={hf} onSubmit={onSubmit}>
@@ -86,6 +96,21 @@ export default function ProductCreateForm({ onSubmit }: Props) {
           <TemplateNumberField<CreateProductFormType>
             {...{ field, fieldState, formState }}
             label="Precio con descuento"
+          />
+        )}
+      />
+      <Controller
+        name="category_id"
+        control={hf.control}
+        render={({ field, fieldState, formState }) => (
+          <TemplateSelectField
+            {...{ field, fieldState, formState }}
+            label="Categoría"
+            placeholder="Seleccionar categoría"
+            options={(categories ?? []).map((c) => ({
+              value: c.id,
+              label: c.name,
+            }))}
           />
         )}
       />
