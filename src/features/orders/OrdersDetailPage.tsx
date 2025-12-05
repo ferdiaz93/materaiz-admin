@@ -9,6 +9,7 @@ import LoadingScreen from 'src/components/loading-screen';
 import moment from 'moment';
 import { APP_NAME } from 'src/config';
 import { LoadingButton } from '@mui/lab';
+import { formatText } from 'src/utils/formatText';
 
 export const OrdersDetailPage = () => {
   const params = useParams<{ id: string }>();
@@ -63,7 +64,7 @@ export const OrdersDetailPage = () => {
               <Typography component="span" fontWeight="bold">
                 Cliente:
               </Typography>{' '}
-              {order.first_name} {order.last_name}
+              {formatText(order.first_name)} {formatText(order.last_name)}
             </Typography>
             <Typography>
               <Typography component="span" fontWeight="bold">
@@ -89,6 +90,14 @@ export const OrdersDetailPage = () => {
               </Typography>{' '}
               {order.is_home_delivery ? 'Envío a domicilio' : 'Retiro por local'}
             </Typography>
+            {order.is_home_delivery && order.address && (
+              <Typography>
+                <Typography component="span" fontWeight="bold">
+                  Dirección:
+                </Typography>{' '}
+                {formatText(order.address)}
+              </Typography>
+            )}
             <Typography>
               <Typography component="span" fontWeight="bold">
                 Total:

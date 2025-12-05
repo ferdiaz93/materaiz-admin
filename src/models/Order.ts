@@ -14,5 +14,8 @@ export type Order = {
   phone: string;
   total_amount: number;
   created_at: string;
+  address?: string;
+  is_home_delivery: boolean;
+  shipping_cost?: number;
   items: OrderItem[];
 };

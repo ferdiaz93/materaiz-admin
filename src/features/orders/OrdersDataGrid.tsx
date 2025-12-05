@@ -12,9 +12,10 @@ import { TemplateFormActions, TemplateFormGrid, TemplateTextField } from 'src/co
 
 import Iconify from 'src/components/iconify';
 import MenuPopover from 'src/components/menu-popover';
-import { Order } from 'src/api/orderRepository';
+import { Order } from 'src/models/Order';
 import { PATHS } from 'src/routes/paths';
 import { Link } from 'react-router-dom';
+import { formatText } from 'src/utils/formatText';
 
 interface Props {
   data: Order[];
@@ -39,7 +40,7 @@ export const OrdersDataGrid: React.FC<Props> = ({ data, isLoading, onDelete }) =
       field: 'customer',
       headerName: 'Cliente',
       type: 'string',
-      valueGetter: (params) => `${params.row.first_name} ${params.row.last_name}`,
+      valueGetter: (params) => formatText(`${params.row.first_name} ${params.row.last_name}`),
     },
     {
       field: 'email',
