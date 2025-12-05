@@ -14,6 +14,7 @@ import MenuPopover from 'src/components/menu-popover';
 import { ContactMessage } from 'src/api/contactMessageRepository';
 import { Link } from 'react-router-dom';
 import { PATHS } from 'src/routes/paths';
+import { formatText } from 'src/utils/formatText';
 
 interface Props {
   data: ContactMessage[];
@@ -37,7 +38,7 @@ export const ContactMessagesDataGrid: React.FC<Props> = ({ data, isLoading }) =>
       field: 'customer',
       headerName: 'Cliente',
       type: 'string',
-      valueGetter: (params) => `${params.row.first_name} ${params.row.last_name}`,
+      valueGetter: (params) => formatText(`${params.row.first_name} ${params.row.last_name}`),
     },
     {
       field: 'email',

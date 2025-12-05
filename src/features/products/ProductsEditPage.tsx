@@ -43,9 +43,10 @@ export const ProductsEditPage = () => {
               onSubmit={handleProductUpdate}
               values={{
                 name: productQuery.data.name ?? '',
+                description: productQuery.data.description ?? '',
                 original_price: productQuery.data.original_price,
-                discount_price:
-                  productQuery.data.discount_price ?? productQuery.data.original_price,
+                discount_price: productQuery.data.discount_price ?? null,
+                image: productQuery.data.image ?? '',
                 category_id: productQuery.data.category_id,
               }}
               categories={categoriesQuery.data}

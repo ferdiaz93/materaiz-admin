@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { httpClient } from 'src/utils/httpClient';
 import { useSuspenseQuery } from 'src/utils/useSupenseQuery';
+import { Order } from 'src/models/Order';
 
 // Interfaces
 export interface CheckoutPayload {
@@ -24,26 +25,6 @@ export interface CheckoutResponse {
   success: boolean;
   orderId: number;
   message?: string;
-}
-
-export interface Order {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  total_amount: number;
-  created_at: string;
-  is_home_delivery: boolean;
-  shipping_cost: number;
-  items: {
-    id: number;
-    product_id: number;
-    product_name: string;
-    quantity: number;
-    unit_price: number;
-    subtotal: number;
-  }[];
 }
 
 export class OrderRepository {

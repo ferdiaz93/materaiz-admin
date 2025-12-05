@@ -8,6 +8,7 @@ import { useContactMessageQuery } from 'src/api/contactMessageRepository';
 import LoadingScreen from 'src/components/loading-screen';
 import moment from 'moment';
 import { APP_NAME } from 'src/config';
+import { formatText } from 'src/utils/formatText';
 
 export const ContactMessageDetailPage = () => {
   const params = useParams<{ id: string }>();
@@ -45,7 +46,7 @@ export const ContactMessageDetailPage = () => {
               <Typography component="span" fontWeight="bold">
                 Nombre:
               </Typography>{' '}
-              {message.first_name} {message.last_name}
+              {formatText(message.first_name)} {formatText(message.last_name)}
             </Typography>
 
             <Typography>

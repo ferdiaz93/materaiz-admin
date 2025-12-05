@@ -9,54 +9,75 @@ import {
   TemplateTextField,
   TemplateSelectField,
 } from 'src/components/form';
+import { Product } from 'src/models/Product';
 
-export type EditProductFormType = {
-  name: string;
-  original_price: number;
-  discount_price: number;
-  category_id: number;
+export type EditProductFormType = Omit<Product, 'id'> & {
+  image: string;
 };
 
 type Props = {
-  values: EditProductFormType;
+  values: any;
   categories: { id: number; name: string }[];
   onSubmit: (value: EditProductFormType) => Promise<any>;
 };
 
-const EditProductSchema: Yup.ObjectSchema<EditProductFormType> = Yup.object().shape({
+const EditProductSchema = Yup.object().shape({
   name: Yup.string().required('El nombre es requerido'),
+  description: Yup.string().required('La descripción es requerida'),
   original_price: Yup.number()
     .required('El precio original es requerido')
     .min(0, 'Debe ser mayor o igual a 0')
     .typeError('Debe ser un número'),
   discount_price: Yup.number()
-    .required('El precio con descuento es requerido')
-    .min(0, 'Debe ser mayor o igual a 0')
-    .max(Yup.ref('original_price'), 'No puede ser mayor al precio original')
-    .typeError('Debe ser un número'),
+    .transform((value, originalValue) =>
+      originalValue === '' || originalValue === null ? null : value
+    )
+    .nullable()
+    .optional()
+    .positive('Debe ser mayor a 0')
+    .max(Yup.ref('original_price'), 'No puede ser mayor al precio original'),
+  image: Yup.string().required('La imagen es requerida').url('Debe ser una URL válida'),
   category_id: Yup.number()
+    .typeError('La categoría es requerida')
+    .positive('Debe seleccionar una categoría')
     .required('La categoría es requerida')
-    .typeError('Seleccione una categoría'),
+    .moreThan(0, 'Debe seleccionar una categoría válida'),
 });
 
-const defaultValues: EditProductFormType = {
+const defaultValues = {
   name: '',
+  description: '',
   original_price: 0,
-  discount_price: 0,
+  discount_price: null,
+  image: '',
   category_id: 0,
 };
 
 export default function ProductEditForm({ values, categories, onSubmit }: Props) {
+  const normalizedValues = {
+    ...values,
+    image: values.image || '',
+    original_price: Number(values.original_price) || 0,
+    discount_price: values.discount_price ? Number(values.discount_price) : null,
+    category_id: values.category_id || 0,
+  };
+
   const hf = useForm<EditProductFormType>({
     resolver: yupResolver(EditProductSchema),
     defaultValues,
-    values,
+    values: normalizedValues,
     mode: 'onBlur',
   });
 
   return (
     <TemplateForm hf={hf} onSubmit={onSubmit}>
       <Controller name="name" render={(field) => <TemplateTextField {...field} label="Nombre" />} />
+
+      <Controller
+        name="description"
+        render={(field) => <TemplateTextField {...field} label="Descripción" />}
+      />
+
       <Controller
         name="original_price"
         control={hf.control}
@@ -75,6 +96,27 @@ export default function ProductEditForm({ values, categories, onSubmit }: Props)
           <TemplateNumberField<EditProductFormType>
             {...{ field, fieldState, formState }}
             label="Precio con descuento"
+            value={field.value === null ? '' : field.value}
+            onChange={(e) => {
+              const { value } = e.target;
+              if (value === '' || value === null) {
+                field.onChange(null);
+              } else {
+                field.onChange(Number(value));
+              }
+            }}
+          />
+        )}
+      />
+      <Controller
+        name="image"
+        control={hf.control}
+        render={({ field, fieldState, formState }) => (
+          <TemplateTextField
+            {...{ field, fieldState, formState }}
+            label="Imagen (URL)"
+            placeholder="https://ejemplo.com/imagen.jpg"
+            required
           />
         )}
       />
