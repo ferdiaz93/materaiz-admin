@@ -8,8 +8,13 @@ import {
   TemplateNumberField,
   TemplateTextField,
   TemplateSelectField,
+  TemplateRichTextField,
 } from 'src/components/form';
 import { Product } from 'src/models/Product';
+import { Picker } from 'emoji-mart';
+import { useState } from 'react';
+import 'emoji-mart/css/emoji-mart.css';
+import 'react-quill/dist/quill.snow.css';
 
 export type EditProductFormType = Omit<Product, 'id'> & {
   image: string;
@@ -68,6 +73,7 @@ export default function ProductEditForm({ values, categories, onSubmit }: Props)
     values: normalizedValues,
     mode: 'onBlur',
   });
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   return (
     <TemplateForm hf={hf} onSubmit={onSubmit}>
@@ -75,7 +81,27 @@ export default function ProductEditForm({ values, categories, onSubmit }: Props)
 
       <Controller
         name="description"
-        render={(field) => <TemplateTextField {...field} label="Descripción" />}
+        control={hf.control}
+        render={({ field, fieldState, formState }) => (
+          <TemplateRichTextField
+            label="Descripción"
+            field={field}
+            fieldState={fieldState}
+            formState={formState}
+          >
+            <button type="button" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
+              😀 Emoji
+            </button>
+            {showEmojiPicker && (
+              <Picker
+                onSelect={(emoji) => {
+                  field.onChange(field.value + emoji.native);
+                  setShowEmojiPicker(false);
+                }}
+              />
+            )}
+          </TemplateRichTextField>
+        )}
       />
 
       <Controller

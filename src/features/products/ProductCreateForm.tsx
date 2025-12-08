@@ -8,8 +8,13 @@ import {
   TemplateFormSubmitButton,
   TemplateNumberField,
   TemplateSelectField,
+  TemplateRichTextField,
 } from 'src/components/form';
 import { useAllCategoriesQuery } from 'src/api/categoryRepository';
+import { Picker } from 'emoji-mart';
+import { useState } from 'react';
+import 'emoji-mart/css/emoji-mart.css';
+import 'react-quill/dist/quill.snow.css';
 
 export type CreateProductFormType = {
   name: string;
@@ -64,6 +69,7 @@ export default function ProductCreateForm({ onSubmit }: Props) {
   });
   const { data: categories } = useAllCategoriesQuery();
 
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   return (
     <TemplateForm hf={hf} onSubmit={onSubmit}>
       <Controller
@@ -75,7 +81,26 @@ export default function ProductCreateForm({ onSubmit }: Props) {
       <Controller
         name="description"
         control={hf.control}
-        render={(field) => <TemplateTextField {...field} label="Descripción" />}
+        render={({ field, fieldState, formState }) => (
+          <TemplateRichTextField
+            label="Descripción"
+            field={field}
+            fieldState={fieldState}
+            formState={formState}
+          >
+            <button type="button" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
+              😀 Emoji
+            </button>
+            {showEmojiPicker && (
+              <Picker
+                onSelect={(emoji) => {
+                  field.onChange(field.value + emoji.native);
+                  setShowEmojiPicker(false);
+                }}
+              />
+            )}
+          </TemplateRichTextField>
+        )}
       />
 
       <Controller

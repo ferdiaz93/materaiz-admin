@@ -17,3 +17,4 @@ export * from './TemplatePasswordField';
 export * from './TemplatePhoneField';
 export * from './TemplateSelectField';
 export * from './TemplateTextField';
+export * from './TemplateRichTextField';
