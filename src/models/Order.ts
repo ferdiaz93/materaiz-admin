@@ -16,6 +16,7 @@ export type Order = {
   created_at: string;
   address?: string;
   is_home_delivery: boolean;
+  is_shipped: boolean;
   shipping_cost?: number;
   items: OrderItem[];
 };

@@ -10,9 +10,11 @@ import moment from 'moment';
 import { APP_NAME } from 'src/config';
 import { LoadingButton } from '@mui/lab';
 import { formatText } from 'src/utils/formatText';
+import { useSnackbar } from 'src/components/snackbar';
 
 export const OrdersDetailPage = () => {
   const params = useParams<{ id: string }>();
+  const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
   const orderQuery = useOrderQuery(Number(params.id));
   const markShippedMutation = useMarkOrderAsShippedMutation();
@@ -23,10 +25,18 @@ export const OrdersDetailPage = () => {
   const handleMarkAsShipped = async () => {
     try {
       await markShippedMutation.mutateAsync(order.id);
-      alert('Orden marcada como enviada');
+
+      enqueueSnackbar({
+        message: 'Orden marcada como enviada',
+        variant: 'success',
+      });
     } catch (err: any) {
       console.error(err);
-      alert('Error al actualizar');
+
+      enqueueSnackbar({
+        message: 'Error al actualizar',
+        variant: 'error',
+      });
     }
   };
 
@@ -44,15 +54,18 @@ export const OrdersDetailPage = () => {
             { name: `Compra #${params.id}` },
           ]}
         />
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-          <LoadingButton
-            variant="contained"
-            loading={markShippedMutation.isLoading}
-            onClick={handleMarkAsShipped}
-          >
-            Marcar como enviado
-          </LoadingButton>
-        </Box>
+        {order.is_home_delivery && (
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+            <LoadingButton
+              variant="contained"
+              loading={markShippedMutation.isLoading}
+              onClick={handleMarkAsShipped}
+              disabled={order.is_shipped}
+            >
+              {order.is_shipped ? 'Ya enviado' : 'Marcar como enviado'}
+            </LoadingButton>
+          </Box>
+        )}
 
         <Card sx={{ p: 3, mb: 3 }}>
           <Typography variant="h6" gutterBottom>
@@ -90,6 +103,14 @@ export const OrdersDetailPage = () => {
               </Typography>{' '}
               {order.is_home_delivery ? 'Envío a domicilio' : 'Retiro por local'}
             </Typography>
+            {order.is_home_delivery && (
+              <Typography>
+                <Typography component="span" fontWeight="bold">
+                  Estado del envío:
+                </Typography>{' '}
+                {order.is_shipped ? 'Enviado' : 'Pendiente'}
+              </Typography>
+            )}
             {order.is_home_delivery && order.address && (
               <Typography>
                 <Typography component="span" fontWeight="bold">

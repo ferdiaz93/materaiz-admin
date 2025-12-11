@@ -75,10 +75,17 @@ export const useDeleteOrderMutation = () => {
   });
 };
 
-export const useMarkOrderAsShippedMutation = () =>
-  useMutation({
+export const useMarkOrderAsShippedMutation = () => {
+  const qc = useQueryClient();
+
+  return useMutation({
     mutationFn: async (orderId: number) => {
-      const res = await httpClient.patch(`/admin/orders/${orderId}/ship`);
+      const res = await httpClient.patch(`admin/orders/${orderId}/ship`);
       return res.data;
     },
+    onSuccess: (_, orderId) => {
+      qc.invalidateQueries(['orders', orderId]);
+      qc.invalidateQueries(['orders']);
+    },
   });
+};
