@@ -101,7 +101,7 @@ export const OrdersDetailPage = () => {
               <Typography component="span" fontWeight="bold">
                 Tipo de entrega:
               </Typography>{' '}
-              {order.is_home_delivery ? 'Envío a domicilio' : 'Retiro por local'}
+              {order.is_home_delivery ? 'Envío a domicilio' : 'Flete a coordinar con el vendedor'}
             </Typography>
             {order.is_home_delivery && (
               <Typography>
@@ -111,7 +111,7 @@ export const OrdersDetailPage = () => {
                 {order.is_shipped ? 'Enviado' : 'Pendiente'}
               </Typography>
             )}
-            {order.is_home_delivery && order.address && (
+            {order.address && (
               <Typography>
                 <Typography component="span" fontWeight="bold">
                   Dirección:
