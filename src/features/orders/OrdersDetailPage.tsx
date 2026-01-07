@@ -149,8 +149,24 @@ export const OrdersDetailPage = () => {
                   {item.product_name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Cantidad: {item.quantity}
+                  Cantidad: {item.quantity} {item.quantity === 1 ? 'unidad' : 'unidades'}
                 </Typography>
+
+                {item.addons && item.addons.length > 0 && (
+                  <Typography variant="body2" color="text.secondary">
+                    Cantidad de bombillas adicionales: {item.addons.length}
+                  </Typography>
+                )}
+
+                {item.addons && item.addons.length > 0 && (
+                  <Box sx={{ mt: 0.5 }}>
+                    {item.addons.map((addon, index) => (
+                      <Typography key={index} variant="body2" sx={{ fontStyle: 'italic', ml: 2 }}>
+                        ↳ + Bombilla: {addon.description} (+${Number(addon.price).toLocaleString()})
+                      </Typography>
+                    ))}
+                  </Box>
+                )}
               </Box>
               <Typography>${(Number(item.unit_price) * item.quantity).toLocaleString()}</Typography>
             </Box>

@@ -4,6 +4,7 @@ export type OrderItem = {
   quantity: number;
   unit_price: number;
   subtotal: number;
+  addons?: OrderItemAddon[];
 };
 
 export type Order = {
@@ -20,3 +21,10 @@ export type Order = {
   shipping_cost?: number;
   items: OrderItem[];
 };
+
+export interface OrderItemAddon {
+  id?: number;
+  type: string;
+  description: string;
+  price: number;
+}
