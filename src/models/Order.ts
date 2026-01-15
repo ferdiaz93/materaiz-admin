@@ -27,4 +27,5 @@ export interface OrderItemAddon {
   type: string;
   description: string;
   price: number;
+  details?: string | null;
 }

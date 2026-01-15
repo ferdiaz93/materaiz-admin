@@ -139,7 +139,7 @@ export const OrdersDetailPage = () => {
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                alignItems: 'center',
+                alignItems: 'flex-start',
                 borderBottom: '1px solid #eee',
                 py: 1.5,
               }}
@@ -153,22 +153,53 @@ export const OrdersDetailPage = () => {
                 </Typography>
 
                 {item.addons && item.addons.length > 0 && (
-                  <Typography variant="body2" color="text.secondary">
-                    Cantidad de bombillas adicionales: {item.addons.length}
-                  </Typography>
-                )}
-
-                {item.addons && item.addons.length > 0 && (
-                  <Box sx={{ mt: 0.5 }}>
+                  <Box sx={{ mt: 1 }}>
+                    <Typography variant="body2" fontWeight="medium" color="text.primary">
+                      Adicionales:
+                    </Typography>
                     {item.addons.map((addon, index) => (
-                      <Typography key={index} variant="body2" sx={{ fontStyle: 'italic', ml: 2 }}>
-                        ↳ + Bombilla: {addon.description} (+${Number(addon.price).toLocaleString()})
-                      </Typography>
+                      <Box key={index} sx={{ ml: 2, mt: 0.5 }}>
+                        {addon.type === 'bombilla' ? (
+                          <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
+                            ↳ + Bombilla: {addon.description} (+$
+                            {Number(addon.price).toLocaleString()})
+                          </Typography>
+                        ) : addon.type === 'custom_design' ? (
+                          <Box>
+                            <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
+                              ↳ + Grabado en la virola (+${Number(addon.price).toLocaleString()})
+                            </Typography>
+                            <Typography
+                              variant="caption"
+                              color={addon.details ? 'text.secondary' : 'warning.main'}
+                            >
+                              Descripción:{' '}
+                              {addon.details
+                                ? `"${addon.details}"`
+                                : '(sin texto especificado - ¡contactar al cliente!)'}
+                            </Typography>
+                          </Box>
+                        ) : (
+                          <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
+                            ↳ + {addon.description || addon.type} (+$
+                            {Number(addon.price).toLocaleString()})
+                          </Typography>
+                        )}
+                      </Box>
                     ))}
                   </Box>
                 )}
               </Box>
-              <Typography>${(Number(item.unit_price) * item.quantity).toLocaleString()}</Typography>
+
+              <Typography sx={{ minWidth: 120, textAlign: 'right' }}>
+                {(() => {
+                  const productTotal = Number(item.unit_price) * item.quantity;
+                  const addonsTotal =
+                    item.addons?.reduce((acc, a) => acc + Number(a.price), 0) || 0;
+                  const total = productTotal + addonsTotal;
+                  return `$${total.toLocaleString()}`;
+                })()}
+              </Typography>
             </Box>
           ))}
 
