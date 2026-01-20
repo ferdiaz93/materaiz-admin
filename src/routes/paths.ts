@@ -43,6 +43,10 @@ export const PATHS = {
       list: '/dashboard/contact-messages/list',
       details: (id: number | string) => `/dashboard/contact-messages/details/${id}`,
     },
+    addons: { 
+      root: '/dashboard/addons',
+      list: '/dashboard/addons/list',
+    },
   },
 } as const;
 

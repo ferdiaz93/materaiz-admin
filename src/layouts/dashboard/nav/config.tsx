@@ -28,6 +28,7 @@ const ICONS = {
   allCourses: iconifyIcon('eva:book-outline'),
   grid: iconifyIcon('eva:grid-outline'),
   message: iconifyIcon('eva:message-square-outline'),
+  addon: iconifyIcon('eva:shopping-bag-outline'),
 };
 
 const navConfig = [
@@ -60,6 +61,10 @@ const navConfig = [
         title: 'Consultas',
         path: PATHS.dashboard.contactMessages.root,
         icon: ICONS.message,
+      },{
+        title: 'Extras y personalizaciones',
+        path: PATHS.dashboard.addons.root,
+        icon: ICONS.addon,
       },
     ],
   },
