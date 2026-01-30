@@ -8,6 +8,7 @@ import {
   TemplateNumberField,
   TemplateTextField,
   TemplateSelectField,
+  TemplateCheckboxField,
   TemplateRichTextField,
 } from 'src/components/form';
 import { Product } from 'src/models/Product';
@@ -47,6 +48,7 @@ const EditProductSchema = Yup.object().shape({
     .positive('Debe seleccionar una categoría')
     .required('La categoría es requerida')
     .moreThan(0, 'Debe seleccionar una categoría válida'),
+  is_custom_design: Yup.boolean().required(),
 });
 
 const defaultValues = {
@@ -56,6 +58,7 @@ const defaultValues = {
   discount_price: null,
   image: '',
   category_id: 0,
+  is_custom_design: false,
 };
 
 export default function ProductEditForm({ values, categories, onSubmit }: Props) {
@@ -65,6 +68,7 @@ export default function ProductEditForm({ values, categories, onSubmit }: Props)
     original_price: Number(values.original_price) || 0,
     discount_price: values.discount_price ? Number(values.discount_price) : null,
     category_id: values.category_id || 0,
+    is_custom_design: Boolean(values.is_custom_design),
   };
 
   const hf = useForm<EditProductFormType>({
@@ -161,6 +165,19 @@ export default function ProductEditForm({ values, categories, onSubmit }: Props)
           />
         )}
       />
+      <Controller
+        name="is_custom_design"
+        control={hf.control}
+        render={({ field, fieldState, formState }) => (
+          <TemplateCheckboxField<EditProductFormType>
+            label="Diseño personalizado"
+            field={field}
+            fieldState={fieldState}
+            formState={formState}
+          />
+        )}
+      />
+
       <TemplateFormActions>
         <TemplateFormSubmitButton>Guardar</TemplateFormSubmitButton>
       </TemplateFormActions>

@@ -9,6 +9,7 @@ import {
   TemplateNumberField,
   TemplateSelectField,
   TemplateRichTextField,
+  TemplateCheckboxField,
 } from 'src/components/form';
 import { useAllCategoriesQuery } from 'src/api/categoryRepository';
 import { Picker } from 'emoji-mart';
@@ -23,6 +24,7 @@ export type CreateProductFormType = {
   discount_price?: number | null;
   image: string;
   category_id: number;
+  is_custom_design: boolean;
 };
 
 const CreateProductSchema: Yup.ObjectSchema<CreateProductFormType> = Yup.object().shape({
@@ -46,6 +48,9 @@ const CreateProductSchema: Yup.ObjectSchema<CreateProductFormType> = Yup.object(
     .positive('Debe seleccionar una categoría')
     .required('La categoría es requerida')
     .moreThan(0, 'Debe seleccionar una categoría válida'),
+  is_custom_design: Yup.boolean()
+    .required()
+    .default(false),
 });
 
 const defaultValues: CreateProductFormType = {
@@ -55,6 +60,7 @@ const defaultValues: CreateProductFormType = {
   discount_price: null,
   image: '',
   category_id: 0,
+  is_custom_design: false,
 };
 
 type Props = {
@@ -146,6 +152,19 @@ export default function ProductCreateForm({ onSubmit }: Props) {
         render={(field) => <TemplateTextField {...field} label="Imagen (URL)" />}
       />
 
+      <Controller
+        name="is_custom_design"
+        control={hf.control}
+        render={({ field, fieldState, formState }) => (
+          <TemplateCheckboxField<CreateProductFormType>
+            label="Diseño personalizado"
+            field={field}
+            fieldState={fieldState}
+            formState={formState}
+          />
+        )}
+      />
+      
       <TemplateFormActions>
         <TemplateFormSubmitButton>Crear</TemplateFormSubmitButton>
       </TemplateFormActions>

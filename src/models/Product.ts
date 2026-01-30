@@ -6,4 +6,5 @@ export interface Product {
   discount_price?: number | null;
   image: string;
   category_id: number;
+  is_custom_design: boolean;
 }

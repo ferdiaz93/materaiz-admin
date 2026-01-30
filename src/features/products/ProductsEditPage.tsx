@@ -48,6 +48,7 @@ export const ProductsEditPage = () => {
                 discount_price: productQuery.data.discount_price ?? null,
                 image: productQuery.data.image ?? '',
                 category_id: productQuery.data.category_id,
+                is_custom_design: productQuery.data.is_custom_design ?? false,
               }}
               categories={categoriesQuery.data}
             />
