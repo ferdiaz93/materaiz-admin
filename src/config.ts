@@ -1,5 +1,5 @@
 // routes
-import LogoIcon from 'src/assets/logo2.png';
+import LogoIcon from 'src/assets/mate_raiz_logo.jpg';
 import { PATHS } from './routes/paths';
 
 // API
