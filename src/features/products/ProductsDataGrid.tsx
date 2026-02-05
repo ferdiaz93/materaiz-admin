@@ -40,6 +40,7 @@ export const ProductsDataGrid: React.FC<Props> = ({ data, isLoading, onDelete })
       field: 'action',
       headerName: 'Acciones',
       type: 'actions',
+      flex: 0.3,
       renderCell: (params) => (
         <>
           <IconButton
@@ -56,7 +57,7 @@ export const ProductsDataGrid: React.FC<Props> = ({ data, isLoading, onDelete })
   ]);
 
   return (
-    <Box sx={{ height: 600 }}>
+    <Box sx={{ height: '100%' }}>
       <TemplateDatagrid
         filter={{
           hf,
@@ -79,6 +80,8 @@ export const ProductsDataGrid: React.FC<Props> = ({ data, isLoading, onDelete })
         rows={data}
         columns={columns}
         getRowId={(row) => row.id}
+        slots={{ pagination: null }} //no mostrar el paginador que no funciona
+        hideFooter={true}
       />
 
       <MenuPopover

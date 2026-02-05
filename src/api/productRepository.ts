@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Product } from 'src/models/Product';
 import { httpClient } from 'src/utils/httpClient';
 import { useSuspenseQuery } from 'src/utils/useSupenseQuery';
@@ -35,6 +35,22 @@ export class ProductRepository {
   edit = async (product: IEditProduct) => httpClient.put(`admin/products/${product.id}`, product);
 
   remove = async (id: number) => httpClient.delete(`admin/products/${id}`);
+
+  getPaginated = async (page: number = 1, limit: number = 20) => {
+    const response = await httpClient.get<any>(`admin/products`, {
+      params: { page, limit },
+    });
+    const apiData = response.data;
+    if (!apiData || !Array.isArray(apiData.data)) {
+      console.error('Formato inesperado de respuesta:', apiData);
+      throw new Error('La respuesta del servidor no contiene un array de productos');
+    }
+    const products = apiData.data.map(getProductMapper);
+    return {
+      products,
+      pagination: apiData.pagination,
+    };
+  };
 }
 
 const repo = new ProductRepository();
@@ -74,3 +90,11 @@ export const useEditProductMutation = () => {
     },
   });
 };
+
+export const usePaginatedProductsQuery = (page: number, limit: number = 20) =>
+  useQuery({
+    queryKey: ['admin-products-paginated', page, limit],
+    queryFn: () => repo.getPaginated(page, limit),
+    keepPreviousData: true,
+    staleTime: 2 * 60 * 1000,
+  });

@@ -43,8 +43,9 @@ export const CategoriesDataGrid: React.FC<Props> = ({ data, isLoading, onDelete 
     },
     {
       field: 'action',
-      headerName: 'Actions',
+      headerName: 'Acciones',
       type: 'actions',
+      flex: 0.3,
       renderCell: (params) => (
         <>
           <IconButton

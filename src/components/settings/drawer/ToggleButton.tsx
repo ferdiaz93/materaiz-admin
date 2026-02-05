@@ -24,6 +24,7 @@ export default function ToggleButton({ notDefault, open, onToggle }: Props) {
     <Box
       sx={{
         p: 0.5,
+        display: 'none',
         right: 24,
         bottom: 24,
         zIndex: 999,
