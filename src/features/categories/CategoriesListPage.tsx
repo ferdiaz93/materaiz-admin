@@ -40,7 +40,7 @@ export function CategoriesListPage() {
 
         <Card
           sx={{
-            height: 600,
+            height: '100%',
           }}
         >
           <CategoriesDataGrid

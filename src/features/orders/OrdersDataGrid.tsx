@@ -71,7 +71,7 @@ export const OrdersDataGrid: React.FC<Props> = ({ data, isLoading, onDelete }) =
   ]);
 
   return (
-    <Box sx={{ height: 600 }}>
+    <Box sx={{ height: '100%' }}>
       <TemplateDatagrid
         filter={{
           hf,

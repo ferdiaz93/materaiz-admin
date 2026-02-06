@@ -22,7 +22,7 @@ export function OrdersListPage() {
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs heading="Listado - Órdenes de compra" links={[{ name: 'Listado' }]} />
 
-        <Card sx={{ height: 600 }}>
+        <Card sx={{ height: '100%' }}>
           <OrdersDataGrid
             data={ordersQuery.data}
             isLoading={ordersQuery.isLoading}

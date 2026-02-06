@@ -200,6 +200,21 @@ export const TemplateDatagrid = <TValue extends FieldValues>({
             },
             ...props.slotProps,
           }}
+          sx={{
+            '& .MuiTablePagination-root': {
+              '& .MuiTablePagination-selectLabel': {
+                display: 'block !important',
+                m: 0,
+              },
+              '& .MuiTablePagination-select': {
+                display: 'inline-flex !important',
+              },
+              '& .MuiTablePagination-input': {
+                display: 'inline-flex !important',
+              },
+            },
+            ...props.sx,
+          }}
           localeText={currentLang.datagridLocale.components.MuiDataGrid.defaultProps.localeText}
         />
       </Card>
